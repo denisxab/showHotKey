@@ -1,0 +1,132 @@
+// --------------
+// https://www.nordtheme.com/docs/colors-and-palettes
+
+$ЦветФона: #2e3440;
+
+$БазовыйЦветТекста: #eceff4;
+$ПриглушенныйЦветТекста: #d8dee9;
+$ЦветВыделениеТекста: #5e81ac;
+
+$БазовыйЦветСсылки: #5e81ac;
+$БазовыйЦветПосещеннойСсылки: #81a1c1;
+
+$ЦветФонаВсплывающегоОкна: #3b4252; //#acb7c7;
+$ЦветФонаПодсказки: #434c5e;
+
+$ЯркоеВыделение: #ebcb8b;
+$ЯркоеВыделение2: #88c0d0;
+
+$Хорошо: #a3be8c;
+$Среднее: #ebcb8b;
+$Плохо: #d08770;
+// Заголовки
+$h6_color: #22252a;
+$h5_color: #2e3238;
+$h4_color: #2f333a;
+$h3_color: #393e46;
+$h2_color: #454a54;
+$h1_color: #505762;
+$h_color: #abb0ba;
+
+body {
+    width: 100vw;
+    background: $ЦветФона;
+    #info_up {
+        border: $ЦветФонаВсплывающегоОкна solid 3px;
+        padding: 10px;
+        border-radius: 10px;
+        margin: 10px;
+        #user_select {
+            margin: 10px auto;
+            width: 80%;
+            select {
+                width: 49%;
+            }
+        }
+    }
+    #info_down {
+        border: $ЦветФонаВсплывающегоОкна solid 3px;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 10px;
+        #list_hot_key {
+            height: 50vh;
+            overflow: auto;
+            .list_hot_key_radio {
+                display: table;
+                width: 100%;
+                border: $ЦветФона solid 1px;
+                color: $ПриглушенныйЦветТекста;
+                background: $ЦветФонаПодсказки;
+                .radio_hot_key {
+                    width: 50%;
+                    float: left;
+                    height: 100%;
+                    padding: 6px;
+                    text-align: left;
+                }
+                .radio_info {
+                    background: $ЦветФонаВсплывающегоОкна;
+                    width: 50%;
+                    float: left;
+                    padding: 6px;
+                    text-align: left;
+                }
+            }
+        }
+    }
+
+    #keboard {
+        border: $ЦветФонаВсплывающегоОкна solid 2px;
+        background: $ЦветФонаВсплывающегоОкна;
+        border-radius: 10px;
+        padding: 10px;
+        min-width: 600px;
+        margin-left: 10px;
+        margin-right: 10px;
+        .hrow {
+            .key {
+                width: 100%;
+                input[type="button"] {
+                    width: 100%;
+                    height: 100%;
+                    min-height: 40px;
+                    color: $ПриглушенныйЦветТекста;
+                    background: $ЦветФона;
+                    border: transparent solid 1px;
+                    border-radius: 4px;
+                    &:hover {
+                        background: $ЦветФонаВсплывающегоОкна;
+                    }
+                    &:active {
+                        background: $ЦветФонаПодсказки;
+                    }
+                }
+                &.select-key {
+                    input[type="button"] {
+                        background: $Хорошо;
+                        color: $ЦветФона;
+                    }
+                    .pos-key {
+                        color: $Среднее;
+                        border: $ЦветФона solid 1px;
+                        background: $ЦветФона;
+                        position: absolute;
+                        margin-left: 5px;
+                        display: inline-block;
+                        margin: auto;
+                        padding-right: 2px;
+                        text-align: center;
+                        border-radius: 0 0 5px 0;
+                    }
+                }
+                border: $ЦветФонаВсплывающегоОкна solid 1px;
+            }
+            .arrows {
+                input[type="button"] {
+                    width: 100px;
+                }
+            }
+        }
+    }
+}

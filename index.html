@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./bootstrap-5.1.3-dist/main.js">
+    <link rel="stylesheet" href="./bootstrap-5.1.3-dist/main.css">
+    <link rel="stylesheet" href="style.min.css">
+
+    <title>showHotKet</title>
+</head>
+
+<body>
+
+    <div id="body">
+        <div id="info_up">
+            <div id="user_select">
+                <!-- Выбор программы и места использование горячих клавиш -->
+                <select id="select-program" size="5" name="program">
+                    <!-- Список программ -->
+                    <option selected="selected" disabled>Выберете программу</option>
+                </select>
+                <select id="select-place" size="5" name="place">
+                    <!-- Список мест в программе -->
+                    <option selected="selected" disabled>Выберете место</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="keboard">
+            <!-- 
+
+            # Как создавать новые клавиши
+            
+            <div class="hrow d-flex flex-row justify-content-around"> # Строка с клавишами
+                <div class="key"> # Клавиша
+                    <div class="pos-key"></div> # Нужен для указания порядкового номера комбинации
+                    <input type="button" value="ИмяКлавиши"> # Символ клавиши
+                </div>
+            </div>
+            -->
+            <div class="hrow d-flex flex-row justify-content-around">
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="Esc">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="F1">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="F2">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="F3">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="F4">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="F5">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="F6">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="F7">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="F8">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="F9">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="F10">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="F11">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="F12">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="Insert">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="Delete">
+                </div>
+            </div>
+            <div class="hrow d-flex flex-row justify-content-around">
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="`">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="1">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="2">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="3">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="4">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="5">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="6">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="7">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="8">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="9">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="0">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="-">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="=">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="backspace">
+                </div>
+            </div>
+            <div class="hrow d-flex flex-row justify-content-around">
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="TAB">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="q">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="w">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="e">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="r">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="t">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="y">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="u">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="i">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="o">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="p">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="[">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="]">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="\">
+                </div>
+            </div>
+            <div class="hrow d-flex flex-row justify-content-around">
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="Caps Lock">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="a">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="s">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="d">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="f">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="g">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="h">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="j">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="k">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="l">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value=";">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="'">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="Enter">
+                </div>
+            </div>
+            <div class="hrow d-flex flex-row justify-content-around">
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="Shift L">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="z">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="x">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="c">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="v">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="b">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+
+                    <input type="button" value="n">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="m">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value=",">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value=".">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="/">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="Shift R">
+                </div>
+            </div>
+            <div class="hrow d-flex flex-row justify-content-around">
+                <div class="key select-key">
+                    <div class="pos-key">10</div>
+                    <input type="button" value="Ctrl L">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="win">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="Alt L">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="Spase">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="Alt R">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="Ctrl R">
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="Left">
+                </div>
+                <div class="arrows">
+                    <div class="key">
+                        <div class="pos-key"></div>
+                        <input type="button" value="Up">
+                    </div>
+                    <div class="key">
+                        <div class="pos-key"></div>
+                        <input type="button" value="Down">
+                    </div>
+                </div>
+                <div class="key">
+                    <div class="pos-key"></div>
+                    <input type="button" value="Right">
+                </div>
+            </div>
+        </div>
+
+        <div id="info_down">
+            <div id="list_hot_key">
+                <!-- 
+                # Список всех горячих клавиш для выбранной программы и места 
+                <div class="list_hot_key_radio">
+                    <div class="radio_hot_key">
+                        <input type="radio" name="nradio" checked>Комбинация клавиши</input>
+                    </div>
+                    <div class="radio_info">
+                        Описание горячей клавиши
+                    </div>
+                </div>
+                -->
+                <div class="list_hot_key_radio">
+                    <div class="radio_hot_key">
+                        <input type="radio" name="nradio" checked> Ctrl+c</input>
+
+                    </div>
+                    <div class="radio_info">
+                        Копировать текст
+                    </div>
+                </div>
+                <!--  -->
+                <div class="list_hot_key_radio">
+                    <div class="radio_hot_key">
+                        <input type="radio" name="nradio" checked> Ctrl+v</input>
+
+                    </div>
+                    <div class="radio_info">
+                        Копировать текст
+                    </div>
+                </div>
+                <!--  -->
+                <div class="list_hot_key_radio">
+                    <div class="radio_hot_key">
+                        <input type="radio" name="nradio" checked> Ctrl+d</input>
+                    </div>
+                    <div class="radio_info">
+                        Копировать текст
+                    </div>
+                </div>
+                <!--  -->
+                <div class="list_hot_key_radio">
+                    <div class="radio_hot_key">
+                        <input type="radio" name="nradio" checked> Ctrl+d</input>
+                    </div>
+                    <div class="radio_info">
+                        Копировать текст
+                    </div>
+                </div>
+                <!--  -->
+                <div class="list_hot_key_radio">
+                    <div class="radio_hot_key">
+                        <input type="radio" name="nradio" checked> Ctrl+d</input>
+                    </div>
+                    <div class="radio_info">
+                        Копировать текст
+                    </div>
+                </div>
+                <!--  -->
+                <div class="list_hot_key_radio">
+                    <div class="radio_hot_key">
+                        <input type="radio" name="nradio" checked> Ctrl+d</input>
+                    </div>
+                    <div class="radio_info">
+                        Копировать текст
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</body>
+<footer>
+    <script src="main.js" defer></script>
+</footer>
+
+</html>
