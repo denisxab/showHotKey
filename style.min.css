@@ -74,21 +74,17 @@ body #keboard .hrow .key input[type=button]:hover {
 body #keboard .hrow .key input[type=button]:active {
   background: #434c5e;
 }
-body #keboard .hrow .key.select-key input[type=button] {
+body #keboard .hrow .key.take-nested-key input[type=button] {
+  background: #ebcb8b;
+  color: #2e3440;
+  opacity: 1;
+}
+body #keboard .hrow .key.take-nested-key.press_key input[type=button] {
+  opacity: 0.5;
+}
+body #keboard .hrow .key.take-key input[type=button] {
   background: #a3be8c;
   color: #2e3440;
-}
-body #keboard .hrow .key.select-key .pos-key {
-  color: #ebcb8b;
-  border: #2e3440 solid 1px;
-  background: #2e3440;
-  position: absolute;
-  margin-left: 5px;
-  display: inline-block;
-  margin: auto;
-  padding-right: 2px;
-  text-align: center;
-  border-radius: 0 0 5px 0;
 }
 body #keboard .hrow .arrows input[type=button] {
   width: 100px;

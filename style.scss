@@ -102,22 +102,38 @@ body {
                         background: $ЦветФонаПодсказки;
                     }
                 }
-                &.select-key {
+
+                // Выделение комбинации клавиш состоящей из вложенных символов `CTRL_L+F`
+                &.take-nested-key {
+                    input[type="button"] {
+                        background: $ЯркоеВыделение;
+                        color: $ЦветФона;
+                        opacity: 1;
+                    }
+                    // Нажатие на клавишу - это нужно для указания вложенных комбинации клавиш
+                    &.press_key {
+                        input[type="button"] {
+                            opacity: 0.5;
+                        }
+                    }
+                    // .pos-key {
+                    //     color: $Среднее;
+                    //     border: $ЦветФона solid 1px;
+                    //     background: $ЦветФона;
+                    //     position: absolute;
+                    //     margin-left: 5px;
+                    //     display: inline-block;
+                    //     margin: auto;
+                    //     padding-right: 2px;
+                    //     text-align: center;
+                    //     border-radius: 0 0 5px 0;
+                    // }
+                }
+                // Выделение комбинации клавиш состоящей из одиночного символа `F`
+                &.take-key {
                     input[type="button"] {
                         background: $Хорошо;
                         color: $ЦветФона;
-                    }
-                    .pos-key {
-                        color: $Среднее;
-                        border: $ЦветФона solid 1px;
-                        background: $ЦветФона;
-                        position: absolute;
-                        margin-left: 5px;
-                        display: inline-block;
-                        margin: auto;
-                        padding-right: 2px;
-                        text-align: center;
-                        border-radius: 0 0 5px 0;
                     }
                 }
                 border: $ЦветФонаВсплывающегоОкна solid 1px;
