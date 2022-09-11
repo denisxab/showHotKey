@@ -42,6 +42,32 @@ body {
             select {
                 width: 49%;
             }
+            #select-program {
+                border-radius: 4px;
+                background: $ЦветФонаВсплывающегоОкна;
+                border: transparent;
+                color: $ПриглушенныйЦветТекста;
+                text-align: left;
+                padding-left: 5px;
+                option:disabled {
+                    color: $ЯркоеВыделение;
+                }
+                option:invalid{
+                    background: #000;
+                }
+                
+            }
+            #select-place {
+                border-radius: 4px;
+                background: $ЦветФонаВсплывающегоОкна;
+                border: transparent;
+                color: $ПриглушенныйЦветТекста;
+                text-align: left;
+                padding-left: 5px;
+                option:disabled {
+                    color: $ЯркоеВыделение;
+                }
+            }
         }
     }
     #info_down {
@@ -72,6 +98,50 @@ body {
                     padding: 6px;
                     text-align: left;
                 }
+            }
+        }
+    }
+    #nav_keboard {
+        // Навигация по вложенным комбинациям клавиш
+        border: $ЦветФонаВсплывающегоОкна solid 3px;
+        margin: 10px;
+        border-radius: 10px;
+        text-align: center;
+        color: $ПриглушенныйЦветТекста;
+
+        &[show="0"] {
+            display: none;
+        }
+        &[show="1"] {
+            display: block;
+        }
+
+        .left {
+            display: inline-block;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            width: 10%;
+            border-right: $ЦветФонаВсплывающегоОкна solid 3px;
+            background: transparent;
+            &:hover {
+                background: $БазовыйЦветСсылки;
+                border-radius: 7px 0 0 7px;
+            }
+        }
+        #nav_keboard_date {
+            width: 78.8%;
+            display: inline-block;
+        }
+        .rigth {
+            width: 10%;
+            border-left: $ЦветФонаВсплывающегоОкна solid 3px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            display: inline-block;
+            background: transparent;
+            &:hover {
+                background: $БазовыйЦветСсылки;
+                border-radius: 0 7px 7px 0;
             }
         }
     }

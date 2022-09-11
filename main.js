@@ -11,6 +11,22 @@ let MappingKeyFromHtmlKeyboard = {};
 // Структура для хранения выбранной конфигурации горячих клавиш, в основном нужна для того чтобы хранить вложенные комбинации клавиш
 let TakeHotKey = {};
 
+class NestedDict {
+	add() {}
+	getLast() {}
+}
+
+// Структура для хранения навигации во вложенных комбинациях клавиш
+let NestedTakeKey = {};
+
+// Список клавиш в навигационной панели
+let StackNavKey = {
+	// Текущий список с клавишами
+	current: [],
+	// Список клавиш которые были удалены
+	last: [],
+};
+
 // Все комбинации клавиш {'ИмяПрограммы':{'МестоВ_Программе':{'КомбинацииКлавиш':'ОписаниеКомбинации'}}}
 let HotKeyDict = {
 	// В какой программе
@@ -32,7 +48,9 @@ let HotKeyDict = {
 			"Ctrl_r + c": "Копировать выделенный текст",
 			"Ctrl_r + v": "Вставить тест",
 			f: "Поиск",
-			"Ctrl_r + shift + f": "Поиск во всем проекте",
+			"Ctrl_r + shift_l + alt_l + f": "Поиск во всем проекте",
+			"Ctrl_r + shift_l + c": "Поиск во всем проекте",
+			"Ctrl_r + shift_l + d": "Поиск во всем проекте",
 		},
 	},
 	warno: {
@@ -56,7 +74,7 @@ class Utils {
 			selectElement.remove(i);
 		}
 	}
-	static list_to_nested_dict(_dict, _list, _next_index = 0) {
+	static add_nested_dict(_dict, _list, _next_index = 0) {
 		// Функция для вставки в списка в словарь, кратко говоря элементы списка станут ключами словаря
 		/*
         ::IN:::::::::::::::::::::::::::::::::::::::::::::::::
@@ -109,13 +127,13 @@ class Utils {
 		let nv = _dict[_list[_next_index]];
 		// Добавляем элементы в словарь пока в списке есть значения
 		if (nv !== undefined) {
-			this.list_to_nested_dict(nv, _list, _next_index + 1);
+			this.add_nested_dict(nv, _list, _next_index + 1);
 		} else {
 			// Если словарь закончился, а в списке еще есть элементы, то продолжаем добавлять элементы в словарь
 			if (_list.length - 1 >= _next_index) {
 				_dict[_list[_next_index]] = {};
 				nv = _dict[_list[_next_index]];
-				this.list_to_nested_dict(nv, _list, _next_index + 1);
+				this.add_nested_dict(nv, _list, _next_index + 1);
 			}
 		}
 		return _dict;
@@ -191,33 +209,95 @@ class UserSelect {
 	}
 }
 
+class NavKey {
+	static ShowNavKey() {
+		const elm = document.getElementById("nav_keboard_date");
+		elm.innerText = StackNavKey.current.join("+");
+	}
+	static addNavKey(val) {
+		// Добавить клавишу в навигационную панель
+		console.log("addNavKey");
+		// Добавляем клавишу в список выбранных, если она еще не добавлена в конец
+		if (StackNavKey.current[StackNavKey.current.length - 1] !== val) {
+			StackNavKey.current.push(val);
+			NavKey.ShowNavKey();
+		}
+	}
+	static popNavKey() {
+		// Удалить с конца клавишу в навигационной панели
+		console.log("popNavKey");
+		// Если в текущей навигации есть клавиша
+		if (StackNavKey.current[0] !== undefined) {
+			// Удаляем клавишу из текущей навигации, и заносим ей в предыдущие
+			StackNavKey.last.push(StackNavKey.current.pop());
+			function get_last_key_nested_dict(_dict, _list, _next_index = 0) {
+				// Итерируемся по элементам списка `_list` которые являются ключами словаря `_dict`
+				// Останавливаемся на последнем ключе `_dict` который есть в `_list`
+				let nv = _list[_next_index];
+				_next_index += 1;
+				if (nv) {
+					return get_last_key_nested_dict(_dict[nv], _list, _next_index);
+				} else {
+					return _dict;
+				}
+			}
+			// Берем предыдущею комбинацию клавиш
+			NestedTakeKey = get_last_key_nested_dict(TakeHotKey, StackNavKey.current);
+			// Показываем доступные клавиши, для предыдущей комбинации
+			VirtualHotKey._ShowClickKey(NestedTakeKey);
+			// Показываем текущий путь в навигационную панель клавиш
+			NavKey.ShowNavKey();
+			//------------------------
+		}
+	}
+	static backNavKey() {
+		// Вернуть ранее удаленную клавишу
+		// Проверяем на то что есть клавиша которую можно возвращать
+		console.log("backNavKey");
+		if (StackNavKey.last[0] !== undefined) {
+			StackNavKey.current.push(StackNavKey.last.pop());
+			NavKey.ShowNavKey();
+		}
+	}
+}
+
 class VirtualHotKey {
+	static GetAllKey() {
+		// Получить все клавиши с виртуальной клавиатуры
+		return document.querySelectorAll(
+			'#keboard .hrow .key input[type="button"]'
+		);
+	}
 	static ClearTakeKey() {
 		// Убрать выбор со всех клавиш виртуальной клавиатуры
-		console.log("ClearTakeKey");
-		for (let x of this.get_all_key()) {
+		for (let x of this.GetAllKey()) {
 			let elm = x.parentNode;
 			elm.classList.remove("take-key");
+			elm.classList.remove("take-nested-key");
+			elm.classList.remove("press_key");
 		}
 	}
 
 	static AgainShowTakeKeyboard(list_hot_key) {
-		// Показать комбинации клавиш на вириальной клавиатуре, в зависимости от выбранной программы и места использования
-		// list_hot_key: HotKeyDict[select_program][select_place]
-		// !!
-		console.log("AgainShowKeyboard");
+		/* 
+			Показать комбинации клавиш на вириальной клавиатуре, в зависимости от выбранной программы и места использования
+			
+			list_hot_key: HotKeyDict[select_program][select_place]
+		*/
 		// Отчищаем предыдущие занятые клавиши
 		VirtualHotKey.ClearTakeKey();
+		// Отчищаем словарь занятые комбинации от прошлых
+		TakeHotKey = {};
 		for (let x of Object.keys(list_hot_key)) {
-			// Переводим комбинацию клавиш в стандартный тип
+			// Переводим комбинацию клавиш в стандартный вид
 			x = ParseHotKey._BaseParse(x);
-			console.log(x);
-			// Заносим комбинацию в структуру, для дальнейше логики вложенных комбинации клавиш
-			TakeHotKey = Utils.list_to_nested_dict(TakeHotKey, x);
+			// Заносим комбинацию в структуру в вложенный словарь, для дальнейше логики вложенных комбинации клавиш
+			TakeHotKey = Utils.add_nested_dict(TakeHotKey, x);
+			// Делаем глубокую копию. Это нужно для навигации во вложенных комбинациях клавиш
+			NestedTakeKey = JSON.parse(JSON.stringify(TakeHotKey));
 			// Выделяем первые клавиши из комбинации
 			let elm = MappingKeyFromHtmlKeyboard[x[0]];
 			console.log(elm);
-
 			// Условие для простых комбинаций клавиш, состоящие из одного символа
 			if (x.length == 1) {
 				elm.parentElement.classList.add("take-key");
@@ -228,50 +308,73 @@ class VirtualHotKey {
 			}
 		}
 	}
-	static _ShowClickKey(event) {
-		// Показать вложенные комбинации клавиш, например Ctrl_L+C
-		// !!
-		console.log("_ShowDepHotKey");
-		let elm = event.target;
-		// Если это вложенная комбинация клавиш
-		if (elm.parentElement.classList.contains("take-nested-key")) {
-			elm.parentNode.classList.toggle("press_key");
-			// --------------------------
-			let list_key = TakeHotKey[ParseHotKey._BaseParse(event.target.value)];
-			for (let x in list_key) {
-				console.log(x);
-				console.log(list_key[x]);
-				if (Object.keys(list_key[x]).length > 0) {
-					console.log("!!");
-				} else {
-				}
+
+	static _ShowClickKey(list_key) {
+		// Отчищаем занятые комбинации, будем показывать те комбинации которые доступные через клавишу `elm_value`
+		VirtualHotKey.ClearTakeKey();
+		for (let x in list_key) {
+			console.log(x);
+			console.log(list_key[x]);
+			let elm_key = MappingKeyFromHtmlKeyboard[x];
+			if (Object.keys(list_key[x]).length > 0) {
+				// Если это вложенная комбинация клавиш
+				elm_key.parentElement.classList.add("take-nested-key");
+			} else {
+				// Если это одиночный символ
+				elm_key.parentElement.classList.add("take-key");
 			}
-			// --------------------------
+		}
+	}
+
+	static _ClickNestedKey(elm) {
+		/*
+			Обработчик нажатий вложенных клавиш 
+
+			Показать какие занятые  клавиши, для текущей нажатой клавиши. например для комбинации Ctrl_L+C, занятая клавиша будет `C` 
+		*/
+		// Помечаем нажатую клавишу
+		elm.parentNode.classList.toggle("press_key");
+		// Получаем стандартизированное название выбранной клавиши
+		const elm_value = ParseHotKey._BaseParse(elm.value)[0];
+		// Добавляем эту клавишу в навигационную панель
+		NavKey.addNavKey(elm_value);
+		// Показываем доступные клавиши
+		VirtualHotKey._ShowClickKey(
+			// Получаем все доступные комбинации клавиши(на одном уровне) для текущей нажатой клавиши.
+			NestedTakeKey[elm_value]
+		);
+		// Переходи на уровень в низ, на те комбинации которые доступны через нажатую клавишу
+		NestedTakeKey = NestedTakeKey[elm_value];
+	}
+
+	static _ClickKey(event) {
+		/* 
+			Обработчик нажатие на все клавиши виртуальной клавиатуры. 
+		*/
+		console.log("_ClickKey");
+		let elm = event.target;
+		// Если это вложенная клавиша
+		if (elm.parentElement.classList.contains("take-nested-key")) {
+			VirtualHotKey._ClickNestedKey(elm);
 		}
 	}
 
 	static _addEventClickKey() {
-		for (let x of this.get_all_key()) {
-			x.addEventListener("click", this._ShowClickKey);
-		}
+		// Добавляем обработчик нажатий на клавиши вириальной клавиатуры
+		this.GetAllKey().forEach((elm) => {
+			elm.addEventListener("click", this._ClickKey);
+		});
 	}
 
-	static get_all_key() {
-		// Получить все клавиши
-		return document.querySelectorAll(
-			'#keboard .hrow .key input[type="button"]'
-		);
-	}
 	static _BuildMappingKeyFromHtmlKeyboard() {
-		// Собрать структуру данных MappingKeyFromHtmlKeyboard
-		console.log(MappingKeyFromHtmlKeyboard);
-		// Получаем все клавиши из виртуальной клавиатуры
-		let all_key = VirtualHotKey.get_all_key();
+		/*
+			Собрать структуру данных MappingKeyFromHtmlKeyboard 
+		*/
 		// Заполняем MappingKeyFromHtmlKeyboard значениями из виртуальной клавиатуры
-		for (let x of all_key) {
-			console.log(`${x.value}: ${x}`);
-			MappingKeyFromHtmlKeyboard[x.value.toUpperCase()] = x;
-		}
+		VirtualHotKey.GetAllKey().forEach((elm) => {
+			console.log(`${elm.value}: ${elm}`);
+			MappingKeyFromHtmlKeyboard[elm.value.toUpperCase()] = elm;
+		});
 	}
 	static init() {
 		this._addEventClickKey();

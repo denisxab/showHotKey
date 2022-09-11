@@ -15,6 +15,31 @@ body #info_up #user_select {
 body #info_up #user_select select {
   width: 49%;
 }
+body #info_up #user_select #select-program {
+  border-radius: 4px;
+  background: #3b4252;
+  border: transparent;
+  color: #d8dee9;
+  text-align: left;
+  padding-left: 5px;
+}
+body #info_up #user_select #select-program option:disabled {
+  color: #ebcb8b;
+}
+body #info_up #user_select #select-program option:invalid {
+  background: #000;
+}
+body #info_up #user_select #select-place {
+  border-radius: 4px;
+  background: #3b4252;
+  border: transparent;
+  color: #d8dee9;
+  text-align: left;
+  padding-left: 5px;
+}
+body #info_up #user_select #select-place option:disabled {
+  color: #ebcb8b;
+}
 body #info_down {
   border: #3b4252 solid 3px;
   padding: 10px;
@@ -45,6 +70,47 @@ body #info_down #list_hot_key .list_hot_key_radio .radio_info {
   float: left;
   padding: 6px;
   text-align: left;
+}
+body #nav_keboard {
+  border: #3b4252 solid 3px;
+  margin: 10px;
+  border-radius: 10px;
+  text-align: center;
+  color: #d8dee9;
+}
+body #nav_keboard[show="0"] {
+  display: none;
+}
+body #nav_keboard[show="1"] {
+  display: block;
+}
+body #nav_keboard .left {
+  display: inline-block;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 10%;
+  border-right: #3b4252 solid 3px;
+  background: transparent;
+}
+body #nav_keboard .left:hover {
+  background: #5e81ac;
+  border-radius: 7px 0 0 7px;
+}
+body #nav_keboard #nav_keboard_date {
+  width: 78.8%;
+  display: inline-block;
+}
+body #nav_keboard .rigth {
+  width: 10%;
+  border-left: #3b4252 solid 3px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: inline-block;
+  background: transparent;
+}
+body #nav_keboard .rigth:hover {
+  background: #5e81ac;
+  border-radius: 0 7px 7px 0;
 }
 body #keboard {
   border: #3b4252 solid 2px;
