@@ -64,6 +64,10 @@ body #info_down #list_hot_key .list_hot_key_radio .radio_hot_key {
   padding: 6px;
   text-align: left;
 }
+body #info_down #list_hot_key .list_hot_key_radio .radio_hot_key input[type=radio] {
+  margin-right: 10px;
+  margin-left: 10px;
+}
 body #info_down #list_hot_key .list_hot_key_radio .radio_info {
   background: #3b4252;
   width: 50%;
