@@ -27,10 +27,22 @@ let G_HotKeyDict = {
 	},
 	warno: {
 		игра: {
-			"ctrl_r + g": "Группировать отряды",
+			"[": "Вкл/Выкл оружие",
+			C: "Показать видимость",
+			E: "Остановка",
+			J: "Рассредоточится",
+			O: "Вкл/Выкл ответный огонь",
+			P: "Авто поиск укрытия",
 			F: "Быстрый марш",
 			T: "Огонь",
-			spase: "Вкл/Выкл Пауза",
+			"Ctrl_l + T": "Быстрое движение и атака",
+			"Ctrl_l + G": "Сгруппировать выделенные войска",
+			R: "Разгрузиться на позиции",
+			G: "Задний ход",
+			H: "Пустить дым",
+			Y: "Посадка вертолета",
+			Z: "Наступать",
+			X: "Оборонять",
 		},
 	},
 };
@@ -54,7 +66,11 @@ class Utils {
 	// ++++++++++++++++++++++
 	/* Класс с универсальными утилитами */
 	static removeOptions(selectElement, end = 1) {
-		/* Отчистить `selected` от `options`, по умолчанию оставляем самый первый элемент */
+		/*
+			Отчистить `selected` от `options`, по умолчанию оставляем самый первый элемент 
+			
+			Но если предать `end=0` то он удалит все записи.
+		 */
 		let i,
 			L = selectElement.options.length - 1;
 		for (i = L; i >= end; i--) {
@@ -62,7 +78,9 @@ class Utils {
 		}
 	}
 	static getFromSelect(html_id) {
-		/* Получить `индекс,текст` из `select` по указному `id` */
+		/* 
+			Получить выбранный элемент в виде `индекс,текст`, из тега `select` по указному `html_id` 
+		*/
 		let elm = document.getElementById(html_id);
 		if (elm.selectedIndex <= 0) {
 			// Исключаем значение по умолчанию
@@ -72,16 +90,22 @@ class Utils {
 	}
 
 	static getElementsByClassNameUp(elm, req_class) {
-		// Поиск класса в верх
+		/*
+			Поиск по имени класса указанный `req_class` в верх по элементам `elm`
+			
+			Вернет найденный HTML элемент у которого в списке классов есть `req_class` 
+		*/
+
 		function _self(_elm, _req_class) {
-			if (_elm.classList.contains(_req_class) === false) {
-				_self(_elm.parentNode, _req_class);
+			if (_elm.tagName === undefined) {
+				return null;
+			} else if (_elm.classList.contains(_req_class) === false) {
+				return _self(_elm.parentNode, _req_class);
 			} else {
+				return _elm;
 			}
-			return _elm;
 		}
-		const res = _self(elm, req_class);
-		return res;
+		return _self(elm, req_class);
 	}
 }
 
@@ -460,16 +484,15 @@ class ListHotKey {
 	}
 	static _ClickElmFomListHotKey(event) {
 		// Обработать нажатие на элемент их списка горячих клавиш
-		console.log("SelectHotKey");
-		console.log(event);
-		const elm = event.target;
-		const elm2 = Utils.getElementsByClassNameUp(elm, "list_hot_key_radio");
-
-		if (elm.parentElement.parentElement.id == "list_hot_key") {
-			if (elm.parentElement.classList.contains("list_hot_key_radio")) {
-				// Переключить радио кнопку.
-				ListHotKey.changeSelectElement(elm.parentElement);
-			}
+		console.log("_ClickElmFomListHotKey");
+		const elm = Utils.getElementsByClassNameUp(
+			event.target,
+			"list_hot_key_radio"
+		);
+		// Если найден такой класс
+		if (elm) {
+			// Переключить радио кнопку.
+			ListHotKey.changeSelectElement(elm);
 		}
 	}
 
