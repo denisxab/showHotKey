@@ -57,6 +57,14 @@ body #info_down #list_hot_key .list_hot_key_radio {
   color: #d8dee9;
   background: #434c5e;
 }
+body #info_down #list_hot_key .list_hot_key_radio.select {
+  background: #3b4252;
+  border-radius: 4px;
+  box-shadow: inset 0px 0px 5px 1px #88c0d0;
+}
+body #info_down #list_hot_key .list_hot_key_radio.select .radio_info {
+  background: transparent;
+}
 body #info_down #list_hot_key .list_hot_key_radio .radio_hot_key {
   width: 50%;
   float: left;

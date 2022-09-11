@@ -78,6 +78,16 @@ body {
             height: 50vh;
             overflow: auto;
             .list_hot_key_radio {
+                // Выбранная комбинация клавиш
+                &.select {
+                    background: $ЦветФонаВсплывающегоОкна;
+                    border-radius: 4px;
+                    box-shadow: inset 0px 0px 5px 1px $ЯркоеВыделение2;
+                    .radio_info {
+                        background: transparent;
+                    }
+                }
+
                 display: table;
                 width: 100%;
                 border: $ЦветФона solid 1px;

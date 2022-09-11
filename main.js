@@ -19,7 +19,7 @@ let G_HotKeyDict = {
 			"Ctrl_r + c": "Копировать выделенный текст",
 			"Ctrl_r + v": "Вставить тест",
 			f: "Поиск",
-			"Ctrl_r + shift_l + alt_l + f": "Поиск во всем проекте",
+			"Ctrl_r +    shift_l + alt_l + f": "Поиск во всем проекте",
 			"Ctrl_r + shift_l + Ctrl_l + r": "Поиск во всем проекте",
 			"Ctrl_r + shift_l + c": "Поиск во всем проекте",
 			"Ctrl_r + shift_l + d": "Поиск во всем проекте",
@@ -69,6 +69,19 @@ class Utils {
 			return null;
 		}
 		return [elm.selectedOptions[0].index, elm.selectedOptions[0].text];
+	}
+
+	static getElementsByClassNameUp(elm, req_class) {
+		// Поиск класса в верх
+		function _self(_elm, _req_class) {
+			if (_elm.classList.contains(_req_class) === false) {
+				_self(_elm.parentNode, _req_class);
+			} else {
+			}
+			return _elm;
+		}
+		const res = _self(elm, req_class);
+		return res;
 	}
 }
 
@@ -261,11 +274,26 @@ class VirtualHotKey {
 			}
 		}
 	}
-	static _ClickNestedKey(elm) {
+	static _ClickKey(event) {
+		/* 
+			Обработчик нажатие на все клавиши виртуальной клавиатуры. 
+		*/
+		console.log("_ClickKey");
+		let elm = event.target;
+		// Если это вложенная занятая клавиша
+		if (elm.parentElement.classList.contains("take-nested-key")) {
+			VirtualHotKey._ClickTakeNestedKey(elm);
+		}
+		// Если это простая занятая клавиша
+		else if (elm.parentElement.classList.contains("take-key")) {
+			VirtualHotKey._ClickTakeSimpleKey(elm);
+		}
+	}
+	static _ClickTakeNestedKey(elm) {
 		/*
-			Обработчик нажатий вложенных клавиш 
+			Обработчик нажатий на занятые вложенные клавиши 
 
-			Показать какие занятые  клавиши, для текущей нажатой клавиши. например для комбинации Ctrl_L+C, занятая клавиша будет `C` 
+			Показать какие занятые клавиши, для текущей нажатой клавиши. например для комбинации Ctrl_L+C, занятая клавиша будет `C` 
 		*/
 		// Помечаем нажатую клавишу
 		elm.parentNode.classList.toggle("press_key");
@@ -281,15 +309,29 @@ class VirtualHotKey {
 		// Переходи на уровень в низ, на те комбинации которые доступны через нажатую клавишу
 		G_TakeHotKey.nextFomTake(elm_value);
 	}
-	static _ClickKey(event) {
-		/* 
-			Обработчик нажатие на все клавиши виртуальной клавиатуры. 
+
+	static _ClickTakeSimpleKey(elm) {
+		/*
+			Обработчик нажатий на занятые одиночные клавиши
 		*/
-		console.log("_ClickKey");
-		let elm = event.target;
-		// Если это вложенная клавиша
-		if (elm.parentElement.classList.contains("take-nested-key")) {
-			VirtualHotKey._ClickNestedKey(elm);
+		// Получаем стандартизированное значение нажатой клавиши
+		const elm_value = ParseHotKey.toStandard(elm.value);
+		// Получаем текст из навигации
+		const text_nav = document.getElementById("nav_keboard_date").innerText;
+		// Формируем путь выбранной комбинации
+		let hot_key_path = `${text_nav}`;
+		if (text_nav) {
+			hot_key_path += `+${elm_value}`;
+		} else {
+			hot_key_path = elm_value;
+		}
+		// Перебираем весь список горячих клавиш, и ищем ту которая совпадает с путем
+		for (let xw of ListHotKey.getAllHtmlElement()) {
+			let rhk = xw.querySelector(".radio_hot_key");
+			if (rhk.innerText == hot_key_path) {
+				// Если есть совпадение комбинаций, то выделяем её в списке
+				ListHotKey.changeSelectElement(xw);
+			}
 		}
 	}
 	static _addEventClickKey() {
@@ -326,6 +368,9 @@ class ParseHotKey {
 		return text.toUpperCase().split(/[ \t]*\+[ \t]*/);
 	}
 
+	static toStandard(text) {
+		return this.toSelfKeyboard(text).join("+");
+	}
 	static toSelfKeyboard(text) {
 		// Конвертировать строку с горячей клавишей в список клавиш
 		console.log(`toSelfKeyboard: ${text}`);
@@ -340,6 +385,35 @@ class ListHotKey {
 	/*
 		Список с комбинациями клавиш, в зависимости от выбранной программы и места использования
 	*/
+	// Текущий выделенный элемент из списка, нужен для того чтобы снимать выделение при выборе нового элемента
+	static lastSelectElement = undefined;
+
+	static changeSelectElement(new_select_element) {
+		/* Переключить выделение элемент из списка 
+		
+			new_select_element == .list_hot_key_radio
+		*/
+		// Если есть предыдущий элемент то удаляем с него класс-выделение
+		if (this.lastSelectElement !== undefined) {
+			this.lastSelectElement.classList.remove("select");
+		}
+		// Прошлый класс равен текущему
+		this.lastSelectElement = new_select_element;
+		// Получаем блок с радио кнопкой
+		let rhk = new_select_element.querySelector(".radio_hot_key");
+		// Прокручиваем к выбранному элементу
+		rhk.scrollIntoView();
+		// Переключаем радио кнопку
+		rhk.querySelector('input[type="radio"]').checked = true;
+		// Ставим класс для выделения
+		new_select_element.classList.add("select");
+	}
+
+	static getAllHtmlElement() {
+		return document.querySelectorAll(
+			"#info_down #list_hot_key .list_hot_key_radio"
+		);
+	}
 
 	static ClearList() {
 		// Отчистить список с комбинациями клавиш
@@ -370,9 +444,9 @@ class ListHotKey {
 				div.className = "list_hot_key_radio";
 				div.innerHTML = `
                 <div class="radio_hot_key">
-                    <input type="radio" name="nradio" checked>${
+                    <input type="radio" name="nradio">${ParseHotKey.toStandard(
 											Object.keys(list_hot_key)[i]
-										}</input>
+										)}</input>
                 </div>
                 <div class="radio_info">
                     ${Object.values(list_hot_key)[i]}    
@@ -388,17 +462,14 @@ class ListHotKey {
 		// Обработать нажатие на элемент их списка горячих клавиш
 		console.log("SelectHotKey");
 		console.log(event);
-		// Это будет класс list_hot_key_radio
-		let elm = event.target.parentElement;
-		if (elm.classList.contains("list_hot_key_radio")) {
-			// Получаем элемент с имением горячею клавиши, на которую нажали мышкой
-			let elm_hot_key = elm.getElementsByClassName("radio_hot_key");
-			console.log(elm_hot_key);
-			// Переключить радио кнопку
-			elm_hot_key[0].getElementsByTagName("input")[0].checked = true;
-			// Получаем текст горячей клавиши
-			let elm_hot_key_text = elm_hot_key[0].innerText;
-			ParseHotKey.toSelfKeyboard(elm_hot_key_text);
+		const elm = event.target;
+		const elm2 = Utils.getElementsByClassNameUp(elm, "list_hot_key_radio");
+
+		if (elm.parentElement.parentElement.id == "list_hot_key") {
+			if (elm.parentElement.classList.contains("list_hot_key_radio")) {
+				// Переключить радио кнопку.
+				ListHotKey.changeSelectElement(elm.parentElement);
+			}
 		}
 	}
 
