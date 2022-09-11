@@ -130,6 +130,7 @@ class UserSelect {
 }
 
 class NavKey {
+	// ++++++++++++++++++++++
 	static ClearNavKey() {
 		G_StackNavKey.last = [];
 		G_StackNavKey.current = [];
@@ -160,7 +161,7 @@ class NavKey {
 			// Берем предыдущею комбинацию клавиш
 			G_TakeHotKey.findStartFromDict(G_StackNavKey.current);
 			// Показываем доступные клавиши, для предыдущей комбинации
-			VirtualHotKey.ShowClickKey(G_TakeHotKey.take);
+			VirtualHotKey.ShowNestedKey(G_TakeHotKey.take);
 			// Показываем текущий путь в навигационную панель клавиш
 			NavKey.ShowNavKey();
 		}
@@ -175,14 +176,30 @@ class NavKey {
 			// Берем комбинацию клавиш которая была возвращена из стека
 			G_TakeHotKey.findStartFromDict(G_StackNavKey.current);
 			// Показываем доступные клавиши, для текущей комбинации
-			VirtualHotKey.ShowClickKey(G_TakeHotKey.take);
+			VirtualHotKey.ShowNestedKey(G_TakeHotKey.take);
 			// Показываем текущий путь в навигационную панель клавиш
 			NavKey.ShowNavKey();
 		}
 	}
+
+	static _addEventClickLeft() {
+		document
+			.getElementById("nav_keboard_left")
+			.addEventListener("click", NavKey.popNavKey);
+	}
+	static _addEventClickRight() {
+		document
+			.getElementById("nav_keboard_rigth")
+			.addEventListener("click", NavKey.backNavKey);
+	}
+	static init() {
+		this._addEventClickLeft();
+		this._addEventClickRight();
+	}
 }
 
 class VirtualHotKey {
+	// ++++++++++++++++++++++
 	static GetAllKey() {
 		// Получить все клавиши с виртуальной клавиатуры
 		return document.querySelectorAll(
@@ -191,14 +208,13 @@ class VirtualHotKey {
 	}
 	static ClearTakeKey() {
 		// Убрать выбор со всех клавиш виртуальной клавиатуры
-		for (let x of this.GetAllKey()) {
-			let elm = x.parentNode;
-			elm.classList.remove("take-key");
-			elm.classList.remove("take-nested-key");
-			elm.classList.remove("press_key");
-		}
+		this.GetAllKey().forEach((elm) => {
+			let elm_p = elm.parentNode;
+			elm_p.classList.remove("take-key");
+			elm_p.classList.remove("take-nested-key");
+			elm_p.classList.remove("press_key");
+		});
 	}
-
 	static AgainShowTakeKeyboard(list_hot_key) {
 		/* 
 			Показать комбинации клавиш на вириальной клавиатуре, в зависимости от выбранной программы и места использования
@@ -218,7 +234,6 @@ class VirtualHotKey {
 			G_TakeHotKey.addFomDict(x);
 			// Выделяем первые клавиши из комбинации
 			let elm = G_MappingKeyFromHtmlKeyboard[x[0]];
-			console.log(elm);
 			// Условие для простых комбинаций клавиш, состоящие из одного символа
 			if (x.length == 1) {
 				elm.parentElement.classList.add("take-key");
@@ -229,24 +244,23 @@ class VirtualHotKey {
 			}
 		}
 	}
-
-	static ShowClickKey(list_key) {
-		// Отчищаем занятые комбинации, будем показывать те комбинации которые доступные через клавишу `elm_value`
+	static ShowNestedKey(list_key) {
+		// Выделяем комбинации клавиши переданные в `list`
+		// Отчищаем выделение всех клавиш
 		VirtualHotKey.ClearTakeKey();
 		for (let x in list_key) {
-			console.log(x);
-			console.log(list_key[x]);
+			// Берем html элемент по имени символа
 			let elm_key = G_MappingKeyFromHtmlKeyboard[x];
+			// Если это вложенная комбинация клавиш
 			if (Object.keys(list_key[x]).length > 0) {
-				// Если это вложенная комбинация клавиш
 				elm_key.parentElement.classList.add("take-nested-key");
-			} else {
-				// Если это одиночный символ
+			}
+			// Если это одиночный символ
+			else {
 				elm_key.parentElement.classList.add("take-key");
 			}
 		}
 	}
-
 	static _ClickNestedKey(elm) {
 		/*
 			Обработчик нажатий вложенных клавиш 
@@ -260,14 +274,13 @@ class VirtualHotKey {
 		// Добавляем эту клавишу в навигационную панель
 		NavKey.addNavKey(elm_value);
 		// Показываем доступные клавиши
-		VirtualHotKey.ShowClickKey(
+		VirtualHotKey.ShowNestedKey(
 			// Получаем все доступные комбинации клавиши(на одном уровне) для текущей нажатой клавиши.
 			G_TakeHotKey.getFromTake(elm_value)
 		);
 		// Переходи на уровень в низ, на те комбинации которые доступны через нажатую клавишу
 		G_TakeHotKey.nextFomTake(elm_value);
 	}
-
 	static _ClickKey(event) {
 		/* 
 			Обработчик нажатие на все клавиши виртуальной клавиатуры. 
@@ -279,21 +292,18 @@ class VirtualHotKey {
 			VirtualHotKey._ClickNestedKey(elm);
 		}
 	}
-
 	static _addEventClickKey() {
 		// Добавляем обработчик нажатий на клавиши вириальной клавиатуры
 		this.GetAllKey().forEach((elm) => {
 			elm.addEventListener("click", this._ClickKey);
 		});
 	}
-
 	static _BuildMappingKeyFromHtmlKeyboard() {
 		/*
 			Собрать структуру данных MappingKeyFromHtmlKeyboard 
 		*/
 		// Заполняем MappingKeyFromHtmlKeyboard значениями из виртуальной клавиатуры
 		VirtualHotKey.GetAllKey().forEach((elm) => {
-			console.log(`${elm.value}: ${elm}`);
 			G_MappingKeyFromHtmlKeyboard[elm.value.toUpperCase()] = elm;
 		});
 	}
@@ -304,23 +314,33 @@ class VirtualHotKey {
 }
 
 class ParseHotKey {
+	// ++++++++++++++++++++++
 	// Класс нужный для парсинга и конвертации горячих клавиш
 	static _BaseParse(text) {
-		// Базовые преобразования текста с гончими клавишами
+		/*
+			Базовые преобразования текста с горячими клавишами
+			
+
+			text = 'Ctrl_l + C'
+		*/
 		return text.toUpperCase().split(/[ \t]*\+[ \t]*/);
 	}
 
 	static toSelfKeyboard(text) {
-		// Конвертировать строку с горячей клавишей в список элементов вириальной клавиатур ы на странице
+		// Конвертировать строку с горячей клавишей в список клавиш
 		console.log(`toSelfKeyboard: ${text}`);
 		let list_hot_key = this._BaseParse(text);
-		console.log(list_hot_key);
 		return list_hot_key;
 	}
 }
 
 class ListHotKey {
-	// Список с комбинациями клавиш, в зависимости от выбранной программы и места использования
+	// ++++++++++++++++++++++
+
+	/*
+		Список с комбинациями клавиш, в зависимости от выбранной программы и места использования
+	*/
+
 	static ClearList() {
 		// Отчистить список с комбинациями клавиш
 		let elm = document.getElementById("list_hot_key");
@@ -335,17 +355,17 @@ class ListHotKey {
 		// Выбранная программа
 		let select_program = Utils.getFromSelect("select-program");
 		let select_place = Utils.getFromSelect("select-place");
+		// Если выбрана программа и место использования
 		if ((select_program !== null) & (select_place !== null)) {
-			// Если не null то берем нормальные значения
+			// Если не null то берем имена программы и места
 			select_program = select_program[1];
 			select_place = select_place[1];
-			let start = 0;
 			// Список горячих клавиш
 			let list_hot_key = G_HotKeyDict[select_program][select_place];
 			let end = Object.keys(list_hot_key).length - 1;
 			// Создаем элемент для хранения комбинации клавиш
 			let elm_place = document.getElementById("list_hot_key");
-			for (let i = start; i <= end; i++) {
+			for (let i = 0; i <= end; i++) {
 				let div = document.createElement("div");
 				div.className = "list_hot_key_radio";
 				div.innerHTML = `
@@ -364,7 +384,7 @@ class ListHotKey {
 			VirtualHotKey.AgainShowTakeKeyboard(list_hot_key);
 		}
 	}
-	static _SelectHotKey(event) {
+	static _ClickElmFomListHotKey(event) {
 		// Обработать нажатие на элемент их списка горячих клавиш
 		console.log("SelectHotKey");
 		console.log(event);
@@ -387,7 +407,7 @@ class ListHotKey {
 		console.log("_addEventClickElmHotKey");
 		document
 			.getElementById("list_hot_key")
-			.addEventListener("click", this._SelectHotKey);
+			.addEventListener("click", this._ClickElmFomListHotKey);
 	}
 	static init() {
 		this.AgainShowListHotKey();
@@ -401,6 +421,7 @@ function main() {
 	VirtualHotKey.init();
 	UserSelect.init();
 	ListHotKey.init();
+	NavKey.init();
 }
 main();
 // -------------------------------------------------------------- //

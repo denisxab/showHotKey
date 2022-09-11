@@ -88,7 +88,7 @@ body #nav_keboard[show="0"] {
 body #nav_keboard[show="1"] {
   display: block;
 }
-body #nav_keboard .left {
+body #nav_keboard #nav_keboard_left {
   display: inline-block;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -96,7 +96,7 @@ body #nav_keboard .left {
   border-right: #3b4252 solid 3px;
   background: transparent;
 }
-body #nav_keboard .left:hover {
+body #nav_keboard #nav_keboard_left:hover {
   background: #5e81ac;
   border-radius: 7px 0 0 7px;
 }
@@ -104,7 +104,7 @@ body #nav_keboard #nav_keboard_date {
   width: 78.8%;
   display: inline-block;
 }
-body #nav_keboard .rigth {
+body #nav_keboard #nav_keboard_rigth {
   width: 10%;
   border-left: #3b4252 solid 3px;
   padding-top: 10px;
@@ -112,7 +112,7 @@ body #nav_keboard .rigth {
   display: inline-block;
   background: transparent;
 }
-body #nav_keboard .rigth:hover {
+body #nav_keboard #nav_keboard_rigth:hover {
   background: #5e81ac;
   border-radius: 0 7px 7px 0;
 }
