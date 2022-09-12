@@ -2,6 +2,55 @@ body {
   width: 100vw;
   background: #2e3440;
 }
+body input[type=button] {
+  background: #3b4252;
+  color: #ebcb8b;
+  border: #2e3440 solid 1px;
+  padding: 4px;
+  border-radius: 4px;
+}
+body input[type=button]:hover {
+  background: #5e81ac;
+}
+body input[type=button].click {
+  background: #a3be8c;
+  color: #2e3440;
+}
+body #up_windows {
+  visibility: hidden;
+  position: fixed;
+  top: 2%;
+  right: 0px;
+  bottom: 2%;
+  left: 0px;
+  z-index: 99;
+}
+body #up_windows .body {
+  padding: 10px 15px 10px 15px;
+  margin: 10px 15px 10px 15px;
+  height: 90%;
+  background: #3b4252;
+  border: 1px solid #2e3440;
+  border-radius: 10px;
+  color: #d8dee9;
+  overflow: auto;
+}
+body #up_windows .body .head {
+  margin-bottom: 10px;
+}
+body #up_windows .body #up_windows_text {
+  margin: 0px;
+  padding: 0px;
+}
+body #up_windows .body #up_windows_textarea {
+  width: 100%;
+  height: 100%;
+  color: #d8dee9;
+  background: transparent;
+  border: #ebcb8b solid 2px;
+  border-radius: 8px;
+  padding: 5px;
+}
 body #info_up {
   border: #3b4252 solid 3px;
   padding: 10px;
@@ -11,6 +60,16 @@ body #info_up {
 body #info_up #user_select {
   margin: 10px auto;
   width: 80%;
+}
+body #info_up #user_select #list_hot_key_import_export {
+  margin-bottom: 5px;
+}
+body #info_up #user_select #list_hot_key_import_export #import_hot_key {
+  display: inline-block;
+}
+body #info_up #user_select #list_hot_key_import_export #export_hot_key {
+  display: inline-block;
+  border-radius: 4px;
 }
 body #info_up #user_select select {
   width: 49%;
@@ -69,12 +128,20 @@ body #info_down #list_hot_key .list_hot_key_radio .radio_hot_key {
   width: 50%;
   float: left;
   height: 100%;
-  padding: 6px;
+  padding: 0px;
   text-align: left;
 }
 body #info_down #list_hot_key .list_hot_key_radio .radio_hot_key input[type=radio] {
   margin-right: 10px;
   margin-left: 10px;
+}
+body #info_down #list_hot_key .list_hot_key_radio .radio_hot_key .change_hot_key {
+  width: 90%;
+  margin-top: 4px;
+  border-radius: 3px;
+  border: #2e3440 solid 1px;
+  background: transparent;
+  color: #d8dee9;
 }
 body #info_down #list_hot_key .list_hot_key_radio .radio_info {
   background: #3b4252;

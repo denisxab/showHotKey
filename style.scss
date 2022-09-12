@@ -29,14 +29,77 @@ $h1_color: #505762;
 $h_color: #abb0ba;
 
 body {
+    input[type="button"] {
+        background: $ЦветФонаВсплывающегоОкна;
+        color: $ЯркоеВыделение;
+        border: $ЦветФона solid 1px;
+        padding: 4px;
+        border-radius: 4px;
+        &:hover {
+            background: $БазовыйЦветСсылки;
+        }
+        &.click {
+            background: $Хорошо;
+            color: $ЦветФона;
+        }
+    }
     width: 100vw;
     background: $ЦветФона;
+    #up_windows {
+        visibility: hidden;
+        position: fixed;
+        top: 2%;
+        right: 0px;
+        bottom: 2%;
+        left: 0px;
+        z-index: 99;
+
+        .body {
+            padding: 10px 15px 10px 15px;
+            margin: 10px 15px 10px 15px;
+            height: 90%;
+            background: $ЦветФонаВсплывающегоОкна;
+            border: 1px solid $ЦветФона;
+            border-radius: 10px;
+            color: $ПриглушенныйЦветТекста;
+            overflow: auto;
+            .head {
+                margin-bottom: 10px;
+            }
+            #up_windows_copy {
+            }
+            #up_windows_text {
+                margin: 0px;
+                padding: 0px;
+            }
+            #up_windows_textarea {
+                width: 100%;
+                height: 100%;
+                color: $ПриглушенныйЦветТекста;
+                background: transparent;
+                border: $ЯркоеВыделение solid 2px;
+                border-radius: 8px;
+                padding: 5px;
+            }
+        }
+    }
     #info_up {
         border: $ЦветФонаВсплывающегоОкна solid 3px;
         padding: 10px;
         border-radius: 10px;
         margin: 10px;
+
         #user_select {
+            #list_hot_key_import_export {
+                #import_hot_key {
+                    display: inline-block;
+                }
+                #export_hot_key {
+                    display: inline-block;
+                    border-radius: 4px;
+                }
+                margin-bottom: 5px;
+            }
             margin: 10px auto;
             width: 80%;
             select {
@@ -97,12 +160,20 @@ body {
                     width: 50%;
                     float: left;
                     height: 100%;
-                    padding: 6px;
+                    padding: 0px;
                     text-align: left;
-
                     input[type="radio"] {
                         margin-right: 10px;
                         margin-left: 10px;
+                    }
+                    // Текстовое поле с комбинацией горячих клавиш
+                    .change_hot_key {
+                        width: 90%;
+                        margin-top: 4px;
+                        border-radius: 3px;
+                        border: $ЦветФона solid 1px;
+                        background: transparent;
+                        color: $ПриглушенныйЦветТекста;
                     }
                 }
                 .radio_info {

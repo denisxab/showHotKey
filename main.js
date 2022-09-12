@@ -109,6 +109,30 @@ class Utils {
 	}
 }
 
+class LogicHotKeyDict {
+	static toStandard() {
+		// Приводим `G_HotKeyDict` комбинации клавиш в стандартный вид.
+		// Комбинации клавиш должны быть верхнем регистре, и без пробелов
+		for (let x of Object.keys(G_HotKeyDict)) {
+			for (let x2 of Object.keys(G_HotKeyDict[x])) {
+				let entries = Object.entries(G_HotKeyDict[x][x2]);
+				let capsEntries = entries.map((entry) => [
+					this._toStandardValue(entry[0]),
+					entry[1],
+				]);
+				let capsPopulations = Object.fromEntries(capsEntries);
+				G_HotKeyDict[x][x2] = capsPopulations;
+			}
+		}
+	}
+	static _toStandardValue(text) {
+		return text.toUpperCase().replace(/ /g, "");
+	}
+	static init() {
+		this.toStandard();
+	}
+}
+
 class UserSelect {
 	// ++++++++++++++++++++++
 	static BuildSelectProgram() {
@@ -386,7 +410,6 @@ class ParseHotKey {
 		/*
 			Базовые преобразования текста с горячими клавишами
 			
-
 			text = 'Ctrl_l + C'
 		*/
 		return text.toUpperCase().split(/[ \t]*\+[ \t]*/);
@@ -411,6 +434,8 @@ class ListHotKey {
 	*/
 	// Текущий выделенный элемент из списка, нужен для того чтобы снимать выделение при выборе нового элемента
 	static lastSelectElement = undefined;
+	// Хранит текст комбинации клавиш на момент фокуса
+	static startFocusListHotKey = undefined;
 
 	static changeSelectElement(new_select_element) {
 		/* Переключить выделение элемент из списка 
@@ -420,6 +445,8 @@ class ListHotKey {
 		// Если есть предыдущий элемент то удаляем с него класс-выделение
 		if (this.lastSelectElement !== undefined) {
 			this.lastSelectElement.classList.remove("select");
+			// Вызываем событие расфокусировки с текстового поля комбинации клавиш
+			this.lastSelectElement.querySelector(".change_hot_key").blur();
 		}
 		// Прошлый класс равен текущему
 		this.lastSelectElement = new_select_element;
@@ -431,6 +458,39 @@ class ListHotKey {
 		rhk.querySelector('input[type="radio"]').checked = true;
 		// Ставим класс для выделения
 		new_select_element.classList.add("select");
+	}
+
+	static _Focus_change_hot_key(event) {
+		// Обработка фокусировки на тексте с комбинацией клавиш
+		console.log("_Focus_change_hot_key");
+		// Сохраняем текст на момент фокусировки, чтобы если что можно было откатиться на это значение
+		this.startFocusListHotKey = event.target.value;
+	}
+	static _Blur_change_hot_key(event) {
+		// Обработка расфокусировки на тексте с комбинацией клавиш
+		console.log("_Blur_change_hot_key");
+		const elm = event.target;
+		// Если изменили комбинацию клавиш
+		if (elm.value != this.startFocusListHotKey) {
+			console.log("_Blur_change_hot_key_yes_change");
+			// Запоминаем описание комбинации
+			const val_dict =
+				G_HotKeyDict[Utils.getFromSelect("select-program")[1]][
+					Utils.getFromSelect("select-place")[1]
+				][this.startFocusListHotKey];
+			// Удаляем комбинацию
+			delete G_HotKeyDict[Utils.getFromSelect("select-program")[1]][
+				Utils.getFromSelect("select-place")[1]
+			][this.startFocusListHotKey];
+			// Записываем новую комбинацию клавиш, описание берем из прошлой комбинации
+			const elm_value = LogicHotKeyDict._toStandardValue(elm.value);
+			G_HotKeyDict[Utils.getFromSelect("select-program")[1]][
+				Utils.getFromSelect("select-place")[1]
+			][elm_value] = val_dict;
+			// Отобразить комбинации клавиш на виртуальной клавиатуре.
+			ListHotKey.AgainShowListHotKey();
+		}
+		// --------------------------------------
 	}
 
 	static getAllHtmlElement() {
@@ -446,7 +506,9 @@ class ListHotKey {
 	}
 
 	static AgainShowListHotKey() {
-		// Показать список горячих клавиш для выбранной программы и места
+		/*
+			Показать список горячих клавиш для выбранной программы и места
+		*/
 		console.log("AgainShowListHotKey");
 		// Отчищаем список от прошлых горячих клавиш
 		ListHotKey.ClearList();
@@ -468,14 +530,23 @@ class ListHotKey {
 				div.className = "list_hot_key_radio";
 				div.innerHTML = `
                 <div class="radio_hot_key">
-                    <input type="radio" name="nradio">${ParseHotKey.toStandard(
-											Object.keys(list_hot_key)[i]
-										)}</input>
+                    <input type="radio" name="nradio">
+					<input type="text" class="change_hot_key" value="${ParseHotKey.toStandard(
+						Object.keys(list_hot_key)[i]
+					)}">
                 </div>
                 <div class="radio_info">
                     ${Object.values(list_hot_key)[i]}    
                 </div>
                 `;
+				// Добавляем обработчик событии на расфокусировка текста с комбинацией клавиш
+				div
+					.querySelector(".change_hot_key")
+					.addEventListener("blur", ListHotKey._Blur_change_hot_key);
+				// Добавляем обработчик событии на фокусировку текста с комбинацией клавиш
+				div
+					.querySelector(".change_hot_key")
+					.addEventListener("focus", ListHotKey._Focus_change_hot_key);
 				elm_place.appendChild(div);
 			}
 			// Отобразить комбинации клавиш на виртуальной клавиатуре
@@ -511,11 +582,12 @@ class ListHotKey {
 
 // -------------------------------------------------------------- //
 function main() {
-	// ParseHotKey.init();
+	LogicHotKeyDict.init();
 	VirtualHotKey.init();
 	UserSelect.init();
 	ListHotKey.init();
 	NavKey.init();
+	ImportOrExport.init()
 }
 main();
 // -------------------------------------------------------------- //

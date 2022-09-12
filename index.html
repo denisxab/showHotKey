@@ -14,8 +14,27 @@
 <body>
 
     <div id="body">
+        <div id="up_windows">
+            <!-- Окно поверх всего -->
+            <div class="body">
+                <div class="head">
+                    <input id="up_windows_close" type="button" value="Закрыть">
+                    <input id="up_windows_copy" type="button" value="Копировать">
+                    <input id="up_windows_past" type="button" value="Вставить">
+                </div>
+                <textarea name="" id="up_windows_textarea"></textarea>
+                <pre id="up_windows_text">
+                </pre>
+            </div>
+        </div>
+
         <div id="info_up">
             <div id="user_select">
+                <!-- Кнопки для вызова окон импорта и экспорта -->
+                <div id="list_hot_key_import_export">
+                    <input type="button" id="import_hot_key" value="Импорт">
+                    <input type="button" id="export_hot_key" value="Экспорт">
+                </div>
                 <!-- Выбор программы и места использование горячих клавиш -->
                 <select id="select-program" size="5" name="program">
                     <!-- Список программ -->
@@ -311,7 +330,6 @@
                 </div>
                 <div class="key">
                     <div class="pos-key"></div>
-
                     <input type="button" value="n">
                 </div>
                 <div class="key">
@@ -380,7 +398,6 @@
                 </div>
             </div>
         </div>
-
         <div id="info_down">
             <div id="list_hot_key">
                 <!-- 
@@ -394,70 +411,13 @@
                     </div>
                 </div>
                 -->
-                <div class="list_hot_key_radio select">
-                    <div class="radio_hot_key">
-                        <input type="radio" name="nradio" checked> Ctrl+c</input>
-
-                    </div>
-                    <div class="radio_info">
-                        Копировать текст
-                    </div>
-                </div>
-                <!--  -->
-                <div class="list_hot_key_radio">
-                    <div class="radio_hot_key">
-                        <input type="radio" name="nradio" checked> Ctrl+v</input>
-
-                    </div>
-                    <div class="radio_info">
-                        Копировать текст
-                    </div>
-                </div>
-                <!--  -->
-                <div class="list_hot_key_radio">
-                    <div class="radio_hot_key">
-                        <input type="radio" name="nradio" checked> Ctrl+d</input>
-                    </div>
-                    <div class="radio_info">
-                        Копировать текст
-                    </div>
-                </div>
-                <!--  -->
-                <div class="list_hot_key_radio">
-                    <div class="radio_hot_key">
-                        <input type="radio" name="nradio" checked> Ctrl+d</input>
-                    </div>
-                    <div class="radio_info">
-                        Копировать текст
-                    </div>
-                </div>
-                <!--  -->
-                <div class="list_hot_key_radio">
-                    <div class="radio_hot_key">
-                        <input type="radio" name="nradio" checked> Ctrl+d</input>
-                    </div>
-                    <div class="radio_info">
-                        Копировать текст
-                    </div>
-                </div>
-                <!--  -->
-                <div class="list_hot_key_radio">
-                    <div class="radio_hot_key">
-                        <input type="radio" name="nradio" checked> Ctrl+d</input>
-                    </div>
-                    <div class="radio_info">
-                        Копировать текст
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
-
-
 </body>
 <footer>
     <script src="NestedDict.js"></script>
+    <script src="ImportOrExport.js" defer></script>
     <script src="main.js" defer></script>
 </footer>
 
