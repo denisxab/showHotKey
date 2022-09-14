@@ -2,24 +2,18 @@
 // https://www.nordtheme.com/docs/colors-and-palettes
 
 $ЦветФона: #2e3440;
-
 $БазовыйЦветТекста: #eceff4;
 $ПриглушенныйЦветТекста: #d8dee9;
 $ЦветВыделениеТекста: #5e81ac;
-
 $БазовыйЦветСсылки: #5e81ac;
 $БазовыйЦветПосещеннойСсылки: #81a1c1;
-
-$ЦветФонаВсплывающегоОкна: #3b4252; //#acb7c7;
+$ЦветФонаВсплывающегоОкна: #3b4252;
 $ЦветФонаПодсказки: #434c5e;
-
 $ЯркоеВыделение: #ebcb8b;
 $ЯркоеВыделение2: #88c0d0;
-
 $Хорошо: #a3be8c;
 $Среднее: #ebcb8b;
 $Плохо: #d08770;
-// Заголовки
 $h6_color: #22252a;
 $h5_color: #2e3238;
 $h4_color: #2f333a;
@@ -28,6 +22,40 @@ $h2_color: #454a54;
 $h1_color: #505762;
 $h_color: #abb0ba;
 
+// Окно поверх других
+#up_windows {
+    visibility: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    .body {
+        padding: 10px 15px 10px 15px;
+        margin: 10px 15px 10px 15px;
+        height: 100%;
+        background: $ЦветФонаВсплывающегоОкна;
+        border: 1px solid $ЦветФона;
+        border-radius: 10px;
+        color: $ПриглушенныйЦветТекста;
+        overflow: auto;
+        .head {
+            margin-bottom: 10px;
+        }
+        #up_windows_text {
+            margin: 0px;
+            padding: 0px;
+        }
+        #up_windows_textarea {
+            width: 100%;
+            height: 92%;
+            color: $ПриглушенныйЦветТекста;
+            background: transparent;
+            border: $ЯркоеВыделение solid 2px;
+            border-radius: 8px;
+            padding: 5px;
+        }
+    }
+}
 body {
     input[type="button"] {
         background: $ЦветФонаВсплывающегоОкна;
@@ -45,44 +73,7 @@ body {
     }
     width: 100vw;
     background: $ЦветФона;
-    #up_windows {
-        visibility: hidden;
-        position: fixed;
-        top: 2%;
-        right: 0px;
-        bottom: 2%;
-        left: 0px;
-        z-index: 99;
 
-        .body {
-            padding: 10px 15px 10px 15px;
-            margin: 10px 15px 10px 15px;
-            height: 90%;
-            background: $ЦветФонаВсплывающегоОкна;
-            border: 1px solid $ЦветФона;
-            border-radius: 10px;
-            color: $ПриглушенныйЦветТекста;
-            overflow: auto;
-            .head {
-                margin-bottom: 10px;
-            }
-            #up_windows_copy {
-            }
-            #up_windows_text {
-                margin: 0px;
-                padding: 0px;
-            }
-            #up_windows_textarea {
-                width: 100%;
-                height: 100%;
-                color: $ПриглушенныйЦветТекста;
-                background: transparent;
-                border: $ЯркоеВыделение solid 2px;
-                border-radius: 8px;
-                padding: 5px;
-            }
-        }
-    }
     #info_up {
         border: $ЦветФонаВсплывающегоОкна solid 3px;
         padding: 10px;

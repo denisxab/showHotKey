@@ -1,33 +1,62 @@
-class ImportOrExport {
-	static _Export(event) {
+class UpWindows {
+	static _VisibleUpWindows() {
+		// Показать окно
+		document.getElementById("body").style.setProperty("display", "none");
 		document
 			.getElementById("up_windows")
 			.style.setProperty("visibility", "visible");
+	}
+	static _HiddenUpWindows() {
+		// Скрыть окно
+		document.getElementById("body").style.setProperty("display", "block");
+		document
+			.getElementById("up_windows")
+			.style.setProperty("visibility", "hidden");
+	}
+}
+
+class ImportOrExport {
+	static _Export(event) {
+		UpWindows._VisibleUpWindows();
+		// Скрываем
 		document
 			.getElementById("up_windows_past")
 			.style.setProperty("display", "none");
 		document
+			.getElementById("up_windows_textarea")
+			.style.setProperty("display", "none");
+		document
+			.getElementById("up_windows_apply_and_close")
+			.style.setProperty("display", "none");
+		// Показываем
+		document
 			.getElementById("up_windows_copy")
 			.style.setProperty("display", "inline-block");
 		document
-			.getElementById("up_windows_textarea")
-			.style.setProperty("display", "none");
-		//
+			.getElementById("up_windows_text")
+			.style.setProperty("display", "block");
 		let elm = document.getElementById("up_windows_text");
 		elm.innerText = JSON.stringify(G_HotKeyDict, null, "\t");
 	}
+
 	static _Import() {
-		document
-			.getElementById("up_windows")
-			.style.setProperty("visibility", "visible");
+		UpWindows._VisibleUpWindows();
+		// Скрываем
 		document
 			.getElementById("up_windows_copy")
 			.style.setProperty("display", "none");
+		document
+			.getElementById("up_windows_text")
+			.style.setProperty("display", "none");
+		// Показываем
 		document
 			.getElementById("up_windows_past")
 			.style.setProperty("display", "inline-block");
 		document
 			.getElementById("up_windows_textarea")
+			.style.setProperty("display", "inline-block");
+		document
+			.getElementById("up_windows_apply_and_close")
 			.style.setProperty("display", "inline-block");
 	}
 
@@ -48,11 +77,23 @@ class ImportOrExport {
 		document.getElementById("up_windows_textarea").value = val;
 	}
 	static _CloseUpWindows() {
-		document
-			.getElementById("up_windows")
-			.style.setProperty("visibility", "hidden");
+		// Закрыть
+		console.log("_CloseUpWindows");
+		UpWindows._HiddenUpWindows();
+	}
+
+	static _Apply() {
+		// Применить
+		console.log("_Apply");
+		const text = document.getElementById("up_windows_textarea").value;
+		if (text) {
+			console.log("_Apply_True");
+			G_HotKeyDict = JSON.parse(text);
+		}
+		UpWindows._HiddenUpWindows();
 	}
 	static _addEvent() {
+		// Навешиваем обработчики событий
 		document
 			.getElementById("up_windows_copy")
 			.addEventListener("click", this._ClickCopyBuffer);
@@ -68,6 +109,9 @@ class ImportOrExport {
 		document
 			.getElementById("export_hot_key")
 			.addEventListener("click", this._Export);
+		document
+			.getElementById("up_windows_apply_and_close")
+			.addEventListener("click", this._Apply);
 	}
 
 	static init() {

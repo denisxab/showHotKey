@@ -12,22 +12,21 @@
 </head>
 
 <body>
-
-    <div id="body">
-        <div id="up_windows">
-            <!-- Окно поверх всего -->
-            <div class="body">
-                <div class="head">
-                    <input id="up_windows_close" type="button" value="Закрыть">
-                    <input id="up_windows_copy" type="button" value="Копировать">
-                    <input id="up_windows_past" type="button" value="Вставить">
-                </div>
-                <textarea name="" id="up_windows_textarea"></textarea>
-                <pre id="up_windows_text">
-                </pre>
+    <div id="up_windows">
+        <!-- Окно поверх всего -->
+        <div class="body">
+            <div class="head">
+                <input id="up_windows_close" type="button" value="Закрыть">
+                <input id="up_windows_copy" type="button" value="Копировать">
+                <input id="up_windows_past" type="button" value="Вставить">
+                <input id="up_windows_apply_and_close" type="button" value="Применить и закрыть">
             </div>
+            <textarea id="up_windows_textarea"></textarea>
+            <pre id="up_windows_text">
+            </pre>
         </div>
-
+    </div>
+    <div id="body">
         <div id="info_up">
             <div id="user_select">
                 <!-- Кнопки для вызова окон импорта и экспорта -->
@@ -416,9 +415,10 @@
     </div>
 </body>
 <footer>
-    <script src="NestedDict.js"></script>
-    <script src="ImportOrExport.js" defer></script>
     <script src="main.js" defer></script>
+    <script src="NestedDict.js"></script>
+    <script src="ListHotKey.js"></script>
+    <script src="ImportOrExport.js" defer></script>
 </footer>
 
 </html>
