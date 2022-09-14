@@ -71,13 +71,13 @@ class NestedDict {
 		this.dict = {};
 		this.take = undefined;
 	}
-	addFomDict(list) {
+	addFomDict(list: string[]) {
 		/*
 			Добавить значение в структуру
 
 			Пример list = ['Ctrl_l','Shift_l','C']
 		*/
-		function _self(_dict, _list, _next_index = 0) {
+		function _self(_dict: Object, _list: string[], _next_index: number = 0) {
 			/*
 			Функция для вставки в списка в словарь, кратко говоря элементы списка станут ключами словаря
 

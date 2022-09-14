@@ -234,17 +234,17 @@ class VirtualHotKey {
 		G_TakeHotKey.clear();
 		for (let x of Object.keys(list_hot_key)) {
 			// Переводим комбинацию клавиш в стандартный вид
-			x: [] = ParseHotKey._BaseParse(x);
+			const tmp: string[] = ParseHotKey._BaseParse(x);
 			// Заносим комбинацию в структуру в вложенный словарь, для дальнейше логики вложенных комбинации клавиш
-			G_TakeHotKey.addFomDict(x);
+			G_TakeHotKey.addFomDict(tmp);
 			// Выделяем первые клавиши из комбинации
-			let elm = G_MappingKeyFromHtmlKeyboard[x[0]];
+			let elm = G_MappingKeyFromHtmlKeyboard[tmp[0]];
 			// Условие для простых комбинаций клавиш, состоящие из одного символа
-			if (x.length == 1) {
+			if (tmp.length == 1) {
 				elm.parentElement.classList.add("take-key");
 			}
 			// Условие для вложенных комбинаций клавиш, например `CTRL_L+SHIFT+C`
-			else if (x.length > 1) {
+			else if (tmp.length > 1) {
 				elm.parentElement.classList.add("take-nested-key");
 			}
 		}

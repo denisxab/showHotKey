@@ -97,6 +97,8 @@ class ImportOr {
 			// @ts-ignore
 			G_HotKeyDict = JSON.parse(text);
 		}
+		LogicHotKeyDict.toStandard();
+		ListHotKey.AgainShowListHotKey();
 		UpWindows._HiddenUpWindows();
 	}
 	static _addEvent() {
@@ -113,7 +115,7 @@ class ImportOr {
 		document
 			.getElementById("import_hot_key")
 			.addEventListener("click", this._Import);
-		document.getElementById("_hot_key").addEventListener("click", this._);
+		document.getElementById("export_hot_key").addEventListener("click", this._);
 		document
 			.getElementById("up_windows_apply_and_close")
 			.addEventListener("click", this._Apply);
