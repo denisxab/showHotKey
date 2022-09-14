@@ -14,8 +14,8 @@ class UpWindows {
             .style.setProperty("visibility", "hidden");
     }
 }
-class ImportOrExport {
-    static _Export(event) {
+class ImportOr {
+    static _(event) {
         UpWindows._VisibleUpWindows();
         // Скрываем
         document
@@ -84,6 +84,7 @@ class ImportOrExport {
         const text = elm.value;
         if (text) {
             console.log("_Apply_True");
+            // @ts-ignore
             G_HotKeyDict = JSON.parse(text);
         }
         UpWindows._HiddenUpWindows();
@@ -102,9 +103,7 @@ class ImportOrExport {
         document
             .getElementById("import_hot_key")
             .addEventListener("click", this._Import);
-        document
-            .getElementById("export_hot_key")
-            .addEventListener("click", this._Export);
+        document.getElementById("_hot_key").addEventListener("click", this._);
         document
             .getElementById("up_windows_apply_and_close")
             .addEventListener("click", this._Apply);

@@ -35,7 +35,7 @@ class ListHotKey {
 	static _Focus_change_hot_key(event) {
 		// Обработка фокусировки на тексте с комбинацией клавиш
 		console.log("_Focus_change_hot_key");
-		// Сохраняем текст на момент фокусировки, чтобы если что можно было откатиться на это значение
+		// Сохраняем текст на моменgт фокусировки, чтобы если что можно было откатиться на это значение
 		this.startFocusListHotKey = event.target.value;
 	}
 	static _Blur_change_hot_key(event) {
@@ -87,7 +87,8 @@ class ListHotKey {
 		// Выбранная программа
 		let select_program_arr: [number, string] =
 			Utils.getFromSelect("select-program");
-		let select_place_arr: [number, string] = Utils.getFromSelect("select-place");
+		let select_place_arr: [number, string] =
+			Utils.getFromSelect("select-place");
 		// Если выбрана программа и место использования
 		if (select_program_arr !== null && select_place_arr !== null) {
 			// Если не null то берем имена программы и места

@@ -24,7 +24,7 @@ class ListHotKey {
     static _Focus_change_hot_key(event) {
         // Обработка фокусировки на тексте с комбинацией клавиш
         console.log("_Focus_change_hot_key");
-        // Сохраняем текст на момент фокусировки, чтобы если что можно было откатиться на это значение
+        // Сохраняем текст на моменgт фокусировки, чтобы если что можно было откатиться на это значение
         this.startFocusListHotKey = event.target.value;
     }
     static _Blur_change_hot_key(event) {
