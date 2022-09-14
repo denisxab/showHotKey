@@ -21,6 +21,8 @@ $h3_color: #393e46;
 $h2_color: #454a54;
 $h1_color: #505762;
 $h_color: #abb0ba;
+//
+$div_min_width: 600px;
 
 // Окно поверх других
 #up_windows {
@@ -79,6 +81,7 @@ body {
         padding: 10px;
         border-radius: 10px;
         margin: 10px;
+        min-width: $div_min_width;
 
         #user_select {
             #list_hot_key_import_export {
@@ -128,6 +131,7 @@ body {
         padding: 10px;
         margin: 10px;
         border-radius: 10px;
+        min-width: $div_min_width;
         #list_hot_key {
             height: 50vh;
             overflow: auto;
@@ -141,7 +145,6 @@ body {
                         background: transparent;
                     }
                 }
-
                 display: table;
                 width: 100%;
                 border: $ЦветФона solid 1px;
@@ -149,10 +152,8 @@ body {
                 background: $ЦветФонаПодсказки;
                 .radio_hot_key {
                     width: 50%;
-                    float: left;
                     height: 100%;
-                    padding: 0px;
-                    text-align: left;
+                    float: left;
                     input[type="radio"] {
                         margin-right: 10px;
                         margin-left: 10px;
@@ -160,6 +161,7 @@ body {
                     // Текстовое поле с комбинацией горячих клавиш
                     .change_hot_key {
                         width: 90%;
+                        height: 100%;
                         margin-top: 4px;
                         border-radius: 3px;
                         border: $ЦветФона solid 1px;
@@ -183,6 +185,8 @@ body {
         margin: 10px;
         border-radius: 10px;
         text-align: center;
+        min-width: $div_min_width;
+        height: 50px;
         color: $ПриглушенныйЦветТекста;
 
         &[show="0"] {
@@ -193,7 +197,8 @@ body {
         }
 
         #nav_keboard_left {
-            display: inline-block;
+            display: block;
+            float: left;
             padding-top: 10px;
             padding-bottom: 10px;
             width: 10%;
@@ -206,14 +211,18 @@ body {
         }
         #nav_keboard_date {
             width: 78.8%;
-            display: inline-block;
+            text-align: center;
+            padding-top: 10px;
+            display: block;
+            float: left;
         }
         #nav_keboard_rigth {
+            display: block;
+            float: left;
             width: 10%;
             border-left: $ЦветФонаВсплывающегоОкна solid 3px;
             padding-top: 10px;
             padding-bottom: 10px;
-            display: inline-block;
             background: transparent;
             &:hover {
                 background: $БазовыйЦветСсылки;
@@ -227,7 +236,7 @@ body {
         background: $ЦветФонаВсплывающегоОкна;
         border-radius: 10px;
         padding: 10px;
-        min-width: 600px;
+        min-width: $div_min_width;
         margin-left: 10px;
         margin-right: 10px;
         .hrow {

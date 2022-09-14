@@ -55,6 +55,7 @@ body #info_up {
   padding: 10px;
   border-radius: 10px;
   margin: 10px;
+  min-width: 600px;
 }
 body #info_up #user_select {
   margin: 10px auto;
@@ -103,6 +104,7 @@ body #info_down {
   padding: 10px;
   margin: 10px;
   border-radius: 10px;
+  min-width: 600px;
 }
 body #info_down #list_hot_key {
   height: 50vh;
@@ -125,10 +127,8 @@ body #info_down #list_hot_key .list_hot_key_radio.select .radio_info {
 }
 body #info_down #list_hot_key .list_hot_key_radio .radio_hot_key {
   width: 50%;
-  float: left;
   height: 100%;
-  padding: 0px;
-  text-align: left;
+  float: left;
 }
 body #info_down #list_hot_key .list_hot_key_radio .radio_hot_key input[type=radio] {
   margin-right: 10px;
@@ -136,6 +136,7 @@ body #info_down #list_hot_key .list_hot_key_radio .radio_hot_key input[type=radi
 }
 body #info_down #list_hot_key .list_hot_key_radio .radio_hot_key .change_hot_key {
   width: 90%;
+  height: 100%;
   margin-top: 4px;
   border-radius: 3px;
   border: #2e3440 solid 1px;
@@ -154,6 +155,8 @@ body #nav_keboard {
   margin: 10px;
   border-radius: 10px;
   text-align: center;
+  min-width: 600px;
+  height: 50px;
   color: #d8dee9;
 }
 body #nav_keboard[show="0"] {
@@ -163,7 +166,8 @@ body #nav_keboard[show="1"] {
   display: block;
 }
 body #nav_keboard #nav_keboard_left {
-  display: inline-block;
+  display: block;
+  float: left;
   padding-top: 10px;
   padding-bottom: 10px;
   width: 10%;
@@ -176,14 +180,18 @@ body #nav_keboard #nav_keboard_left:hover {
 }
 body #nav_keboard #nav_keboard_date {
   width: 78.8%;
-  display: inline-block;
+  text-align: center;
+  padding-top: 10px;
+  display: block;
+  float: left;
 }
 body #nav_keboard #nav_keboard_rigth {
+  display: block;
+  float: left;
   width: 10%;
   border-left: #3b4252 solid 3px;
   padding-top: 10px;
   padding-bottom: 10px;
-  display: inline-block;
   background: transparent;
 }
 body #nav_keboard #nav_keboard_rigth:hover {

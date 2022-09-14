@@ -228,13 +228,20 @@ class VirtualHotKey {
             G_TakeHotKey.addFomDict(tmp);
             // Выделяем первые клавиши из комбинации
             let elm = G_MappingKeyFromHtmlKeyboard[tmp[0]];
-            // Условие для простых комбинаций клавиш, состоящие из одного символа
-            if (tmp.length == 1) {
-                elm.parentElement.classList.add("take-key");
+            if (elm) {
+                // Условие для простых комбинаций клавиш, состоящие из одного символа
+                if (tmp.length == 1) {
+                    elm.parentElement.classList.add("take-key");
+                }
+                // Условие для вложенных комбинаций клавиш, например `CTRL_L+SHIFT+C`
+                else if (tmp.length > 1) {
+                    elm.parentElement.classList.add("take-nested-key");
+                }
             }
-            // Условие для вложенных комбинаций клавиш, например `CTRL_L+SHIFT+C`
-            else if (tmp.length > 1) {
-                elm.parentElement.classList.add("take-nested-key");
+            else {
+                const msg_error = `Не правильная заполнена комбинация клавиш: ${x}`;
+                console.error(msg_error);
+                alert(msg_error);
             }
         }
     }
@@ -245,13 +252,20 @@ class VirtualHotKey {
         for (let x in list_key) {
             // Берем html элемент по имени символа
             let elm_key = G_MappingKeyFromHtmlKeyboard[x];
-            // Если это вложенная комбинация клавиш
-            if (Object.keys(list_key[x]).length > 0) {
-                elm_key.parentElement.classList.add("take-nested-key");
+            if (elm_key) {
+                // Если это вложенная комбинация клавиш
+                if (Object.keys(list_key[x]).length > 0) {
+                    elm_key.parentElement.classList.add("take-nested-key");
+                }
+                // Если это одиночный символ
+                else {
+                    elm_key.parentElement.classList.add("take-key");
+                }
             }
-            // Если это одиночный символ
             else {
-                elm_key.parentElement.classList.add("take-key");
+                const msg_error = `Не правильная заполнена комбинация клавиш: ${x}`;
+                console.error(msg_error);
+                alert(msg_error);
             }
         }
     }
