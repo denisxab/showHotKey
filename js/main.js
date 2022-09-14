@@ -361,6 +361,7 @@ class VirtualHotKey {
 		/*
 			Обработчик нажатий на занятые одиночные клавиши
 		*/
+		console.log('_ClickTakeSimpleKey');
 		// Получаем стандартизированное значение нажатой клавиши
 		const elm_value = ParseHotKey.toStandard(elm.value);
 		// Получаем текст из навигации
@@ -374,8 +375,8 @@ class VirtualHotKey {
 		}
 		// Перебираем весь список горячих клавиш, и ищем ту которая совпадает с путем
 		for (let xw of ListHotKey.getAllHtmlElement()) {
-			let rhk = xw.querySelector(".radio_hot_key");
-			if (rhk.innerText == hot_key_path) {
+			let rhk = xw.querySelector(".radio_hot_key .change_hot_key");
+			if (rhk.value == hot_key_path) {
 				// Если есть совпадение комбинаций, то выделяем её в списке
 				ListHotKey.changeSelectElement(xw);
 			}
