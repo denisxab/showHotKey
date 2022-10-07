@@ -99,8 +99,8 @@ let G_HotKeyDict: any = {
 			"ctrl_l+G": "Перейти к указанной строке (`workbench.action.gotoLine`) ",
 			"ctrl_l+B":
 				"Перейти к определению переменной`(`editor.action.revealDefinition`)",
-			"ctrl_l+win+<": "Вернутся в прошлое место редактирования (`Go Back`)",
-			"ctrl_l+win+>": "Вернутся в бедующее место редактирования (`Go Forward`)",
+			"ctrl_l+win+left": "Вернутся в прошлое место редактирования (`Go Back`)",
+			"ctrl_l+win+right": "Вернутся в бедующее место редактирования (`Go Forward`)",
 			// "Поиск в коде"
 			"ctrl_l+R":
 				"Найти с заменой в текущем файле (`editor.action.startFindReplaceAction`)",
