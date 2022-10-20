@@ -138,7 +138,7 @@ let G_HotKeyDict: any = {
 				"Вставить перенос выше (`editor.action.insertLineBefore`)",
 			"Alt_L+shift_L+Down":
 				"Дублировать выбранную строку(`editor.action.duplicateSelection`)",
-			TAB: "Добавить табы вправо (`editor.action.indentLines`)",
+			"ctrl_L+]": "Добавить табы вправо (`editor.action.indentLines`)",
 			"shift_L+tab": "Добавить табы влево (`editor.action.outdentLines`)",
 			"ctrl_l+k+j":
 				"Объединить выделенное в одну строку (`editor.action.joinLines`)",
@@ -177,11 +177,11 @@ let G_HotKeyDict: any = {
 				"Поиск(активный) по переменным в коде  (`workbench.action.gotoSymbol`)",
 			// Отладка
 			"ctrl_l + F5": "Запустить отладку",
-			"ctrl_l + F6": "Начать без отладки",			
+			"ctrl_l + F6": "Начать без отладки",
 			"shift_L + F9": "Новая точка останова столбца",
 			F5: "Продолжить отладку, до следующей точку остановки",
-			"f10": "Шаг с обходом",
-			"F11": "Шаг с заходом",
+			f10: "Шаг с обходом",
+			F11: "Шаг с заходом",
 			"shift_l + F11": "Шаг с выходом",
 			"ctrl_l+shift_l+f5": "Перезапустить отладку",
 			"shift_l+f5": "Остановить отладку",
